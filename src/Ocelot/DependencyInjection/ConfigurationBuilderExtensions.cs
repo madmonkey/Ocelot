@@ -1,6 +1,6 @@
 namespace Ocelot.DependencyInjection
 {
-    using Configuration.File;
+    using Ocelot.Configuration.File;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Configuration.Memory;
@@ -29,18 +29,18 @@ namespace Ocelot.DependencyInjection
             return builder;
         }
 
-        public static IConfigurationBuilder AddOcelot(this IConfigurationBuilder builder, IHostingEnvironment env)
+        public static IConfigurationBuilder AddOcelot(this IConfigurationBuilder builder, IWebHostEnvironment env)
         {
             return builder.AddOcelot(".", env);
         }
 
-        public static IConfigurationBuilder AddOcelot(this IConfigurationBuilder builder, string folder, IHostingEnvironment env)
+        public static IConfigurationBuilder AddOcelot(this IConfigurationBuilder builder, string folder, IWebHostEnvironment env)
         {
             const string primaryConfigFile = "ocelot.json";
 
             const string globalConfigFile = "ocelot.global.json";
 
-            const string subConfigPattern = @"^ocelot\.[a-zA-Z0-9]+\.json$";
+            const string subConfigPattern = @"^ocelot\.(.*?)\.json$";
 
             string excludeConfigName = env?.EnvironmentName != null ? $"ocelot.{env.EnvironmentName}.json" : string.Empty;
 
@@ -70,7 +70,7 @@ namespace Ocelot.DependencyInjection
                 }
 
                 fileConfiguration.Aggregates.AddRange(config.Aggregates);
-                fileConfiguration.ReRoutes.AddRange(config.ReRoutes);
+                fileConfiguration.Routes.AddRange(config.Routes);
             }
 
             var json = JsonConvert.SerializeObject(fileConfiguration);

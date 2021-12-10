@@ -39,9 +39,9 @@ namespace Ocelot.Benchmarks
         {
             var configuration = new FileConfiguration
             {
-                ReRoutes = new List<FileReRoute>
+                Routes = new List<FileRoute>
                     {
-                        new FileReRoute
+                        new FileRoute
                         {
                             DownstreamPathTemplate = "/",
                             DownstreamHostAndPorts = new List<FileHostAndPort>
@@ -74,7 +74,7 @@ namespace Ocelot.Benchmarks
             response.EnsureSuccessStatusCode();
         }
 
-        /*         * Summary*
+        /*        * Summary*
                  BenchmarkDotNet = v0.10.13, OS = macOS 10.12.6 (16G1212) [Darwin 16.7.0]
                 Intel Core i5-4278U CPU 2.60GHz(Haswell), 1 CPU, 4 logical cores and 2 physical cores
                .NET Core SDK = 2.1.4
